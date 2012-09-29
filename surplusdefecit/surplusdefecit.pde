@@ -16,6 +16,7 @@ WebMercator proj = new WebMercator();
 
 void setup() {
   size(800, 600, P3D);
+  size(1280, 790, P3D);
   frameRate(30);
 
   sm.init("myProjectName", GoogleLogin, GooglePassword);
