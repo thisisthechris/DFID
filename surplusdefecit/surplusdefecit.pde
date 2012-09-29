@@ -1,8 +1,8 @@
 import org.gicentre.utils.spatial.*;
 
 
-
-float rotate_val = 0;
+float rotate_x = 0;
+float rotate_y = 0;
 int zoom = 0;
 int gpsScale = 10000;
 int w;
@@ -24,10 +24,11 @@ void setup() {
 }
 
 void draw() {
-  //rotate_val = rotate_val + 0.1;
+  //rotate_y = rotate_y + 0.1;
   translate(width/2, height/2, zoom);
   background(0);
-  rotateY(rotate_val);
+  rotateY(rotate_y);
+  rotateX(rotate_x);
   stroke(255);
   strokeWeight(10);
   //scale(50);
@@ -58,9 +59,10 @@ void draw() {
     //text(sm.getCellValue("Capital", i),projCoords.x/gpsScale , projCoords.y/gpsScale, float(sm.getCellValue("Alt", i)));
     //line(projCoords.x/gpsScale , projCoords.y/gpsScale,  float(sm.getCellValue("Alt", i)), nextProjCoords.x/gpsScale , nextProjCoords.y/gpsScale,  float(sm.getCellValue("Alt", i+1)));
     
+    int inverse = -1;
     //Bars
-    text(sm.getCellValue("Capital", i),projCoords.x/gpsScale , projCoords.y/gpsScale, float(sm.getCellValue("Alt", i)));
-    line(projCoords.x/gpsScale , projCoords.y/gpsScale,  float(sm.getCellValue("Alt", i)), projCoords.x/gpsScale , projCoords.y/gpsScale,  0);
+    text(sm.getCellValue("Capital", i),projCoords.x/gpsScale , (projCoords.y/gpsScale)*inverse, float(sm.getCellValue("Alt", i)));
+    line(projCoords.x/gpsScale , (projCoords.y/gpsScale)*inverse,  float(sm.getCellValue("Alt", i)), projCoords.x/gpsScale , (projCoords.y/gpsScale)*inverse,  0);
     
   };
 
@@ -71,16 +73,22 @@ void draw() {
 
 void keyPressed() {
   if (keyCode == LEFT) {
-    rotate_val = rotate_val - 0.01;
+    rotate_y = rotate_y - 0.01;
   } 
   if (keyCode == RIGHT) {
-    rotate_val = rotate_val + 0.01;
+    rotate_y = rotate_y + 0.01;
   }
   if (keyCode == UP) {
-    zoom = zoom + 10;
+    rotate_x = rotate_x - 0.01;
   }
   if (keyCode == DOWN) {
-    zoom = zoom - 10;
+   rotate_x = rotate_x + 0.01;
+  }
+  if (key == 'a' || key == 'A') {
+      zoom = zoom + 500;
+  }
+  if (key == 'z' || key == 'Z') {
+      zoom = zoom - 500;
   }
 }
 
