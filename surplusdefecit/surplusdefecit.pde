@@ -16,15 +16,25 @@ void setup() {
 
 void draw(){
   rotate_val = rotate_val + 0.1;
-    translate(width/2, height/2, 0);
+  translate(width/2, height/2, 0);
   background(0);
-   rotateY(rotate_val);
-   stroke(255);
+  rotateY(rotate_val);
+  stroke(255);
    
-    scale(100);
-  beginShape();
-  vertex(-1, -1, -1);
-  endShape();
+  //scale(100);
+  
+  
+  
+      beginShape();
+        for (int i=0; i < sm.currentTotalRows; i++) {
+        
+       // vertex(float(sm.getCellValue("Lat",i)),float(sm.getCellValue("Long",i)),float(sm.getCellValue("Alt",i)));
+       vertex(float(sm.getCellValue("Lat",i)),float(sm.getCellValue("Long",i)));
+      
+        };
+      
+      
+      endShape();
    //box(40);
   
 }
