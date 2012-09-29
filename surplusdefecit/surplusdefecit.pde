@@ -4,13 +4,15 @@ import org.gicentre.utils.spatial.*;
 
 float rotate_val = 0;
 int zoom = 0;
-int gpsScale = 10;
+int gpsScale = 10000;
 int w;
 int h;
 
 //SimpleSpreadsheetManager sm;
 
 SimpleSpreadsheetManager sm = new SimpleSpreadsheetManager();
+
+WebMercator proj = new WebMercator();
 
 void setup() {
   size(800, 600, P3D);
@@ -27,7 +29,7 @@ void draw() {
   background(0);
   rotateY(rotate_val);
   stroke(255);
-
+  strokeWeight(10);
   //scale(50);
 
 
@@ -43,8 +45,16 @@ void draw() {
     //text(sm.getCellValue("Capital", i),float(sm.getCellValue("Lat", i))*gpsScale, float(sm.getCellValue("Long", i))*gpsScale, float(sm.getCellValue("Alt", i)));
     //line(float(sm.getCellValue("Lat", i))*gpsScale, float(sm.getCellValue("Long", i))*gpsScale, float(sm.getCellValue("Alt", i)), float(sm.getCellValue("Lat", i+1))*gpsScale, float(sm.getCellValue("Long", i+1))*gpsScale, float(sm.getCellValue("Alt", i+1)));
     
-    text(sm.getCellValue("Capital", i),float(sm.getCellValue("Lat", i))*gpsScale, float(sm.getCellValue("Long", i))*gpsScale);
-    line(float(sm.getCellValue("Lat", i))*gpsScale, float(sm.getCellValue("Long", i))*gpsScale, float(sm.getCellValue("Lat", i+1))*gpsScale, float(sm.getCellValue("Long", i+1))*gpsScale);
+    PVector geo = new PVector(float(sm.getCellValue("Long", i)), float(sm.getCellValue("Lat", i)));
+    PVector projCoords = proj.transformCoords(geo);
+    
+    //println(geo.x+","+geo.y+" -> "+projCoords.x+","+projCoords.y);
+    
+    PVector nextGeo = new PVector(float(sm.getCellValue("Long", i+1)), float(sm.getCellValue("Lat", i+1)));
+    PVector nextProjCoords = proj.transformCoords(nextGeo);
+    
+    text(sm.getCellValue("Capital", i),projCoords.x/gpsScale , projCoords.y/gpsScale, float(sm.getCellValue("Alt", i)));
+    line(projCoords.x/gpsScale , projCoords.y/gpsScale,  float(sm.getCellValue("Alt", i)), nextProjCoords.x/gpsScale , nextProjCoords.y/gpsScale,  float(sm.getCellValue("Alt", i+1)));
   };
 
 
