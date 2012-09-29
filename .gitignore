@@ -2,3 +2,8 @@
 DFID.esproj/Project.espressostorage
 
 *.espressostorage
+
+DFID_Data/.DS_Store
+
+DFID_Data/
+.DS_Store
