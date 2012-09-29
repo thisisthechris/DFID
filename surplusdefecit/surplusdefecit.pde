@@ -84,11 +84,11 @@ void keyPressed() {
   if (keyCode == DOWN) {
    rotate_x = rotate_x + 0.01;
   }
-  if (key == 'a' || key == 'A') {
-      zoom = zoom + 500;
+  if (key == 'w' || key == 'W') {
+      zoom = zoom + 250;
   }
-  if (key == 'z' || key == 'Z') {
-      zoom = zoom - 500;
+  if (key == 's' || key == 'S') {
+      zoom = zoom - 250;
   }
 }
 
