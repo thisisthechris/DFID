@@ -21,20 +21,22 @@ void draw(){
   rotateY(rotate_val);
   stroke(255);
    
-  //scale(100);
+  //scale(50);
   
   
   
-      beginShape();
-        for (int i=0; i < sm.currentTotalRows; i++) {
-        
-       // vertex(float(sm.getCellValue("Lat",i)),float(sm.getCellValue("Long",i)),float(sm.getCellValue("Alt",i)));
-       vertex(float(sm.getCellValue("Lat",i)),float(sm.getCellValue("Long",i)));
-      
+      //beginShape();
+        for (int i=0; i < sm.currentTotalRows -1; i++) {
+
+        //vertex(float(sm.getCellValue("Lat",i)),float(sm.getCellValue("Long",i)),float(sm.getCellValue("Alt",i)));
+       //vertex(float(sm.getCellValue("Lat",i)),float(sm.getCellValue("Long",i)));
+       
+       line(float(sm.getCellValue("Lat",i)),float(sm.getCellValue("Long",i)),float(sm.getCellValue("Alt",i)),float(sm.getCellValue("Lat",i+1)),float(sm.getCellValue("Long",i+1)),float(sm.getCellValue("Alt",i+1)));
+
         };
       
       
-      endShape();
+      //endShape();
    //box(40);
   
 }
