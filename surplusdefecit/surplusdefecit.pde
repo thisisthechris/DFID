@@ -15,7 +15,6 @@ SimpleSpreadsheetManager sm = new SimpleSpreadsheetManager();
 WebMercator proj = new WebMercator();
 
 void setup() {
-  size(800, 600, P3D);
   size(1280, 790, P3D);
   frameRate(30);
 
@@ -54,8 +53,15 @@ void draw() {
     PVector nextGeo = new PVector(float(sm.getCellValue("Long", i+1)), float(sm.getCellValue("Lat", i+1)));
     PVector nextProjCoords = proj.transformCoords(nextGeo);
     
+    
+    //Interconnected
+    //text(sm.getCellValue("Capital", i),projCoords.x/gpsScale , projCoords.y/gpsScale, float(sm.getCellValue("Alt", i)));
+    //line(projCoords.x/gpsScale , projCoords.y/gpsScale,  float(sm.getCellValue("Alt", i)), nextProjCoords.x/gpsScale , nextProjCoords.y/gpsScale,  float(sm.getCellValue("Alt", i+1)));
+    
+    //Bars
     text(sm.getCellValue("Capital", i),projCoords.x/gpsScale , projCoords.y/gpsScale, float(sm.getCellValue("Alt", i)));
-    line(projCoords.x/gpsScale , projCoords.y/gpsScale,  float(sm.getCellValue("Alt", i)), nextProjCoords.x/gpsScale , nextProjCoords.y/gpsScale,  float(sm.getCellValue("Alt", i+1)));
+    line(projCoords.x/gpsScale , projCoords.y/gpsScale,  float(sm.getCellValue("Alt", i)), projCoords.x/gpsScale , projCoords.y/gpsScale,  0);
+    
   };
 
 
