@@ -8,6 +8,8 @@ int gpsScale = 10000;
 int w;
 int h;
 
+boolean altitude, hdimetric, argimetric, comsermetric, costconmetric, docsmetric, foodmetric, fuelmetric, goodsmetric, merchmetric = false; 
+
 //SimpleSpreadsheetManager sm;
 
 SimpleSpreadsheetManager sm = new SimpleSpreadsheetManager();
@@ -15,7 +17,10 @@ SimpleSpreadsheetManager sm = new SimpleSpreadsheetManager();
 WebMercator proj = new WebMercator();
 
 void setup() {
-  size(1280, 790, P3D);
+  //Desktop
+  //size(1280, 790, P3D);
+  //Projector
+  size(1024, 768, P3D);
   frameRate(30);
 
   sm.init("myProjectName", GoogleLogin, GooglePassword);
@@ -29,7 +34,7 @@ void draw() {
   background(0);
   rotateY(rotate_y);
   rotateX(rotate_x);
-  stroke(255);
+
   strokeWeight(10);
   //scale(50);
 
@@ -40,7 +45,9 @@ void draw() {
 
     //vertex(float(sm.getCellValue("Lat",i)),float(sm.getCellValue("Long",i)),float(sm.getCellValue("Alt",i)));
     //vertex(float(sm.getCellValue("Lat",i)),float(sm.getCellValue("Long",i)));
-
+     stroke(255);
+     strokeWeight(10);
+ 
 
     
     //text(sm.getCellValue("Capital", i),float(sm.getCellValue("Lat", i))*gpsScale, float(sm.getCellValue("Long", i))*gpsScale, float(sm.getCellValue("Alt", i)));
@@ -62,8 +69,29 @@ void draw() {
     int inverse = -1;
     //Bars
     text(sm.getCellValue("Capital", i),projCoords.x/gpsScale , (projCoords.y/gpsScale)*inverse, float(sm.getCellValue("Alt", i)));
-    line(projCoords.x/gpsScale , (projCoords.y/gpsScale)*inverse,  float(sm.getCellValue("Alt", i)), projCoords.x/gpsScale , (projCoords.y/gpsScale)*inverse,  0);
     
+    
+    //boolean altitude, hdimetric, argimetric, comsermetric, comsermetric, docsmetric, foodmetric, fuelmetric, goodsmetric, merchmetric = false; 
+    
+    //HDIScale  agriMetric  comSerMetric  costPerContainerMetric  docsMetric  foodMetric  fuelMetric  goodsMetric  merchMetric
+    
+    if (hdimetric == true){ drawLinearDataSet("HDIScale",i,0,projCoords); };
+    if (argimetric == true){ drawDataSet("agriMetric",i,0,projCoords); };
+    if (comsermetric == true){ drawDataSet("comSerMetric",i,0,projCoords); };
+    if (costconmetric == true){ drawDataSet("costPerContainerMetric",i,0,projCoords); };
+    if (docsmetric == true){ drawDataSet("docsMetric",i,0,projCoords); };
+    if (foodmetric == true){ drawDataSet("foodmetric",i,0,projCoords); };
+    if (fuelmetric == true){ drawDataSet("fuelmetric",i,0,projCoords); };
+    if (goodsmetric == true){ drawDataSet("goodsmetric",i,0,projCoords); };
+    if (merchmetric == true){ drawDataSet("merchMetric",i,0,projCoords); };
+    
+    
+    //Fake Routes
+    stroke(0,0,255);
+    strokeWeight(5);
+    PVector usGeo = new PVector(-77.0241,38.8921);
+    PVector usGeoCoords = proj.transformCoords(usGeo);
+    line(usGeoCoords.x/gpsScale , (usGeoCoords.y/gpsScale)*inverse,  0, projCoords.x/gpsScale , (projCoords.y/gpsScale)*inverse,  0);
   };
 
 
@@ -90,5 +118,59 @@ void keyPressed() {
   if (key == 's' || key == 'S') {
       zoom = zoom - 250;
   }
+  //options //boolean altitude, hdimetric, argimetric, comsermetric, costconmetric, docsmetric, foodmetric, fuelmetric, goodsmetric, merchmetric = false; 
+  if(key == '1'){
+   hdimetric = !hdimetric; 
+  }
+  if(key == '2'){
+   argimetric = !argimetric; 
+  }
+  if(key == '3'){
+   comsermetric = !comsermetric; 
+  }
+  if(key == '4'){
+   costconmetric = !costconmetric; 
+  }
+  if(key == '5'){
+   docsmetric = !docsmetric; 
+  }
+  if(key == '6'){
+   foodmetric = !foodmetric; 
+  }
+  if(key == '7'){
+   fuelmetric = !fuelmetric; 
+  }
+  if(key == '8'){
+   goodsmetric = !goodsmetric; 
+  }
+  if(key == '9'){
+   merchmetric = !merchmetric; 
+  }
+  if(key == '0'){
+   altitude = !altitude; 
+  }
+  
+  
 }
 
+void drawDataSet(String input, int i,float offset, PVector the_Coords){
+  float the_Metric = float(sm.getCellValue(input, i));
+  int inverse = -1;
+    
+    if (the_Metric < 0){
+      stroke(255,0,0);
+    } else{
+      stroke(0,255,0);
+    }
+    line(the_Coords.x/gpsScale , (the_Coords.y/gpsScale)*inverse,  the_Metric, the_Coords.x/gpsScale , (the_Coords.y/gpsScale)*inverse,  0);
+  
+};
+
+void drawLinearDataSet(String input, int i,float offset, PVector the_Coords){
+  float the_Metric = float(sm.getCellValue(input, i));
+  int inverse = -1;
+    stroke(255);
+    
+    line(the_Coords.x/gpsScale , (the_Coords.y/gpsScale)*inverse,  the_Metric, the_Coords.x/gpsScale , (the_Coords.y/gpsScale)*inverse,  0);
+  
+};
