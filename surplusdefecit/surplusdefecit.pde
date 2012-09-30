@@ -8,6 +8,8 @@ int gpsScale = 10000;
 int w;
 int h;
 
+PImage img;
+
 boolean altitude, hdimetric, argimetric, comsermetric, costconmetric, docsmetric, foodmetric, fuelmetric, goodsmetric, merchmetric = false; 
 
 //SimpleSpreadsheetManager sm;
@@ -25,6 +27,8 @@ void setup() {
 
   sm.init("myProjectName", GoogleLogin, GooglePassword);
   sm.fetchSheetByKey(GoogleDocKey, 0);
+  
+  img = loadImage("World_Map_flat_Mercator-1 copy.png");
   //println(sm.getCellValue("Lat",2));
 }
 
@@ -74,7 +78,8 @@ void draw() {
     //boolean altitude, hdimetric, argimetric, comsermetric, comsermetric, docsmetric, foodmetric, fuelmetric, goodsmetric, merchmetric = false; 
     
     //HDIScale  agriMetric  comSerMetric  costPerContainerMetric  docsMetric  foodMetric  fuelMetric  goodsMetric  merchMetric
-    
+    //altitude
+    if (altitude == true){ drawLinearDataSet("Alt",i,0,projCoords); };
     if (hdimetric == true){ drawLinearDataSet("HDIScale",i,0,projCoords); };
     if (argimetric == true){ drawDataSet("agriMetric",i,0,projCoords); };
     if (comsermetric == true){ drawDataSet("comSerMetric",i,0,projCoords); };
@@ -92,6 +97,24 @@ void draw() {
     PVector usGeo = new PVector(-77.0241,38.8921);
     PVector usGeoCoords = proj.transformCoords(usGeo);
     line(usGeoCoords.x/gpsScale , (usGeoCoords.y/gpsScale)*inverse,  0, projCoords.x/gpsScale , (projCoords.y/gpsScale)*inverse,  0);
+    
+    //PVector maptopGeo = new PVector(100,100);
+    //PVector maptopbottom = new PVector(100,100);
+    
+    //PVector maptopGeoCoords = proj.transformCoords(maptopGeo);
+    //PVector maptopbottomCoords = proj.transformCoords(maptopbottom);
+    
+    //imageMode(CORNERS);
+    
+    //image(img, maptopGeoCoords.x/gpsScale , (maptopGeoCoords.y/gpsScale)*inverse,maptopbottomCoords.x/gpsScale , (maptopbottomCoords.y/gpsScale)*inverse);
+   
+    /*beginShape();
+      texture(img, 0, 0);
+      //vertex(-100, -100, 0, 0,   0);
+      //vertex( 100, -100, 0, 400, 0);
+      //vertex( 100,  100, 0, 400, 400);
+      //vertex(-100,  100, 0, 0,   400);
+    endShape();*/
   };
 
 
