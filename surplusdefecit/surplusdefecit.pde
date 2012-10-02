@@ -72,7 +72,7 @@ void draw() {
     
     int inverse = -1;
     //Bars
-    text(sm.getCellValue("Capital", i),projCoords.x/gpsScale , (projCoords.y/gpsScale)*inverse, float(sm.getCellValue("Alt", i)));
+    text(sm.getCellValue("Capital", i),projCoords.x/gpsScale , (projCoords.y/gpsScale)*inverse, 30);
     
     
     //boolean altitude, hdimetric, argimetric, comsermetric, comsermetric, docsmetric, foodmetric, fuelmetric, goodsmetric, merchmetric = false; 
@@ -97,6 +97,12 @@ void draw() {
     PVector usGeo = new PVector(-77.0241,38.8921);
     PVector usGeoCoords = proj.transformCoords(usGeo);
     line(usGeoCoords.x/gpsScale , (usGeoCoords.y/gpsScale)*inverse,  0, projCoords.x/gpsScale , (projCoords.y/gpsScale)*inverse,  0);
+    
+    /*stroke(0,255,255);
+    strokeWeight(5);
+    PVector ukGeo = new PVector(-0.1262,51.5002);
+    PVector ukGeoCoords = proj.transformCoords(ukGeo);
+    line(ukGeoCoords.x/gpsScale , (ukGeoCoords.y/gpsScale)*inverse,  0, projCoords.x/gpsScale , (projCoords.y/gpsScale)*inverse,  0);*/
     
     //PVector maptopGeo = new PVector(100,100);
     //PVector maptopbottom = new PVector(100,100);
